@@ -1,0 +1,35 @@
+{
+  "name": "model-review",
+  "version": "0.1.0",
+  "description": "Pin notes on 3D models in the browser; AI agents read them, change the model and reply under each note.",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "model-review": "bin/model-review.mjs",
+    "model-review-mcp": "bin/model-review-mcp.mjs"
+  },
+  "files": [
+    "app/",
+    "bin/",
+    "lib/",
+    "skill/",
+    "examples/demo/project.json",
+    "examples/demo/models/",
+    "examples/demo/make-demo.mjs",
+    "docs/",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marshallsfolly/model-review.git"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "start": "node bin/model-review.mjs serve examples/demo",
+    "demo": "node examples/demo/make-demo.mjs"
+  },
+  "keywords": ["3d", "glb", "gltf", "review", "mcp", "agents", "three.js"]
+}

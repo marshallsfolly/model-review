@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Model Review</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+	<header class="mast">
+		<p class="eyebrow" id="project-title">Model review</p>
+		<h1 id="name">Loading</h1>
+		<p class="lede" id="lede"></p>
+	</header>
+
+	<nav class="picker" id="picker" aria-label="Models"></nav>
+
+	<main class="desk">
+		<section class="bench" aria-label="Model viewer">
+			<div class="stage" id="stage">
+				<div class="veil" id="veil"><div><b id="veil-title">Loading</b><span id="veil-text">Fetching the project…</span></div></div>
+				<div class="stage-note"><span id="note-left"></span><span id="note-right"></span></div>
+			</div>
+			<div class="action-bar" id="action-bar" role="group" aria-labelledby="act-label" hidden>
+				<span class="label" id="act-label">Action</span>
+				<button class="btn act" id="play" type="button" aria-pressed="false">Play</button>
+				<div class="scrub">
+					<button class="btn sm step" id="act-back" type="button" aria-label="Back a step">−</button>
+					<input type="range" id="act" min="0" max="1000" step="1" value="0" aria-label="How far the action is worked, from rest to fully worked" aria-describedby="act-read">
+					<button class="btn sm step" id="act-fwd" type="button" aria-label="Forward a step">+</button>
+				</div>
+				<select id="speed" aria-label="Playback speed">
+					<option value="1500">Quick</option>
+					<option value="4500" selected>Slow</option>
+					<option value="12000">Very slow</option>
+				</select>
+				<output class="act-read" id="act-read" for="act"></output>
+			</div>
+			<div class="controls">
+				<div class="group" role="group" aria-labelledby="views-label" id="views"><span class="label" id="views-label">View</span></div>
+				<div class="group" role="group" aria-labelledby="surface-label">
+					<span class="label" id="surface-label">Surface</span>
+					<button class="btn" type="button" data-mode="0" aria-pressed="true">Finished</button>
+					<button class="btn" type="button" data-mode="1" aria-pressed="false">Colour</button>
+					<button class="btn" type="button" data-mode="2" aria-pressed="false">Roughness</button>
+					<button class="btn" type="button" data-mode="3" aria-pressed="false">Metal</button>
+					<button class="btn" type="button" data-mode="4" aria-pressed="false">Occlusion</button>
+					<button class="btn" type="button" data-mode="5" aria-pressed="false">Normals</button>
+				</div>
+				<div class="group" role="group" aria-labelledby="model-label">
+					<span class="label" id="model-label">Mesh</span>
+					<button class="btn" type="button" id="wire" aria-pressed="false">Wireframe</button>
+					<button class="btn" type="button" id="lod" aria-pressed="false">Light version</button>
+				</div>
+				<div class="group" role="group" aria-labelledby="parts-label" id="parts" hidden><span class="label" id="parts-label">Parts</span></div>
+			</div>
+		</section>
+
+		<aside class="review" id="review" aria-labelledby="review-title">
+			<div class="review-head">
+				<h2 id="review-title">Review</h2>
+				<div class="verdict" role="group" aria-labelledby="verdict-label">
+					<span class="label" id="verdict-label">Verdict</span>
+					<button class="btn" type="button" data-verdict="approved" aria-pressed="false" disabled>Approve</button>
+					<button class="btn" type="button" data-verdict="changes" aria-pressed="false" disabled>Needs changes</button>
+				</div>
+			</div>
+			<p class="review-off" id="review-off">Connecting to the notes…</p>
+			<div class="review-body" id="review-body" hidden>
+				<form class="who" id="who" hidden>
+					<label class="label" for="who-name">Your name, shown on your notes</label>
+					<div class="who-row">
+						<input id="who-name" type="text" autocomplete="name" maxlength="60" placeholder="Name">
+						<button class="btn" type="submit">Save</button>
+					</div>
+				</form>
+				<p class="who-line" id="who-line" hidden>Writing as <b id="who-show"></b> <button class="link" id="who-change" type="button">Change</button></p>
+				<form class="composer" id="fb-form" novalidate>
+					<div class="composer-head">
+						<b id="fb-title">New note</b>
+						<span class="fb-meta" id="fb-where"></span>
+					</div>
+					<div class="area" id="fb-area-row" hidden>
+						<label class="label" for="fb-area">Area</label>
+						<input type="range" id="fb-area" min="0" max="100" step="1" value="40" aria-describedby="fb-area-val">
+						<output id="fb-area-val" for="fb-area"></output>
+					</div>
+					<label class="label" for="fb-text">Note</label>
+					<textarea id="fb-text" rows="4" placeholder="What's wrong here, and what should it look like?"></textarea>
+					<div class="drop" id="fb-drop">
+						<span>Reference images: drop or paste them, or</span>
+						<label class="btn sm" for="fb-file">Choose files</label>
+						<input type="file" id="fb-file" accept="image/png,image/jpeg,image/webp,image/gif,image/*" multiple hidden>
+					</div>
+					<div class="fb-imgs" id="fb-thumbs"></div>
+					<label class="check" id="fb-snap-row"><input type="checkbox" id="fb-snap" checked> Attach a snapshot of this view, the area lit</label>
+					<div class="fb-actions">
+						<button class="btn act" type="submit" id="fb-save">Save note</button>
+						<button class="btn" type="button" id="fb-unpin" hidden>Unpin</button>
+						<button class="btn" type="button" id="fb-clear">Clear</button>
+					</div>
+					<p class="fb-status" id="fb-status" role="status" aria-live="polite"></p>
+				</form>
+				<div class="fb-col">
+					<h3 id="fb-count">Notes</h3>
+					<ul class="fb-list" id="fb-list"></ul>
+					<p class="fb-empty" id="fb-empty">No notes on this model yet. Click the model where something's wrong and say what it should be; reference images showing how it should look help most.</p>
+				</div>
+			</div>
+		</aside>
+	</main>
+
+	<section class="sheet" id="sheet" aria-label="About this model" hidden>
+		<div>
+			<h2>Details</h2>
+			<dl class="facts" id="facts"></dl>
+		</div>
+		<div id="about" hidden>
+			<h2>About</h2>
+			<ul class="made" id="made"></ul>
+			<div class="sources" id="sources"></div>
+		</div>
+	</section>
+
+	<footer class="foot" id="foot"></footer>
+</div>
+
+<dialog class="lightbox" id="lightbox" aria-label="Image">
+	<img alt="">
+	<p></p>
+	<form method="dialog"><button class="btn" type="submit">Close</button></form>
+</dialog>
+
+<script>
+// Whatever stops the viewer is said on the stage rather than left as a blank box.
+function fail(message) {
+	var veil = document.getElementById('veil');
+	if (!veil || fail.said) return;
+	fail.said = true;
+	veil.hidden = false;
+	document.getElementById('veil-title').textContent = 'The viewer stopped';
+	document.getElementById('veil-text').textContent = message;
+}
+addEventListener('error', function (e) { fail(e.message || 'A script failed to load.'); });
+addEventListener('unhandledrejection', function (e) { fail(String((e.reason && e.reason.message) || e.reason)); });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/loaders/GLTFLoader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/loaders/DRACOLoader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/libs/meshopt_decoder.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/environments/RoomEnvironment.js"></script>
+<script>
+if (!window.THREE || !THREE.GLTFLoader || !THREE.OrbitControls || !THREE.RoomEnvironment) fail('The 3D library (three.js) didn\'t load from cdn.jsdelivr.net. Check the connection and reload.');
+</script>
+<script type="module" src="app.js"></script>
+</body>
+</html>

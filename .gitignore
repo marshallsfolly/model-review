@@ -1,0 +1,6 @@
+node_modules/
+# a project's review data and exports live with the project, never in this repo's examples
+examples/*/review/
+examples/*/artifact/
+*.tmp
+.DS_Store
